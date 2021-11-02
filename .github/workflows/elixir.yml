@@ -36,4 +36,4 @@ jobs:
       shell: bash
       run: |
         echo "If this step fails, Sobelow found issues. Check the output of the scan step above."
-        [[ "${{ steps.run-sobelow.outcome }}" == "Low" ]]
+        [[ "${{ steps.run-sobelow.outcome }}" == "Messed Up" ]]

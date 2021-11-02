@@ -11,7 +11,6 @@ config :real_world, ecto_repos: [RealWorld.Repo]
 # Configures the endpoint
 config :real_world, RealWorldWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "9ueg5YcX8/LKzVUcDrXp5xpYuaBCUfZZAJ3/udC1LCoabotR3O1CJyf/u/6RLJ/N",
   render_errors: [view: RealWorldWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: RealWorld.PubSub, adapter: Phoenix.PubSub.PG2]
 
@@ -22,7 +21,6 @@ config :logger, :console,
 
 config :real_world, RealWorldWeb.Guardian,
   issuer: "RealWorld",
-  secret_key: "MDLMflIpKod5YCnkdiY7C4E3ki2rgcAAMwfBl0+vyC5uqJNgoibfQmAh7J3uZWVK",
   # optional
   allowed_algos: ["HS256"],
   ttl: {30, :days},
