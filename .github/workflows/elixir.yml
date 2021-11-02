@@ -30,4 +30,10 @@ jobs:
     - name: Install Sobelow
       run: mix escript.install hex sobelow
     - name: Run Sobelow
+      id: run-sobelow
       run: mix sobelow
+    - name: Verify kube-linter-action succeeded
+      shell: bash
+      run: |
+        echo "If this step fails, Sobelow found issues. Check the output of the scan step above."
+        [[ "${{ steps.run-sobelow.outcome }}" == "High Confidence" ]]
