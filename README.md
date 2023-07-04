@@ -17,7 +17,7 @@ To run this project, you will need to install the following dependencies on your
 * [Phoenix](https://hexdocs.pm/phoenix/installation.html)
 * [PostgreSQL](https://www.postgresql.org/download/macosx/)
 
-To get started, run the following commands in your project folder:
+To get started, run the following commands in your project folder:s
 
 ```shell
 cp config/dev.exs.example config/dev.exs  # creates the project's configuration file
