@@ -54,7 +54,7 @@ defmodule RealWorld.Mixfile do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:plug, "~> 1.0"},
       {:corsica, "~> 1.0"},
-      {:sobelow, "~> 0.11.1"}
+      {:sobelow, "~> 0.12.0"}
     ]
   end
 
