@@ -27,8 +27,7 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
-    # - name: Install Sobelow
-    #   run: mix escript.install hex sobelow
+
     - name: Run Sobelow
       id: run-sobelow
-      run: mix sobelow --threshold high --exit
+      run: mix sobelow --threshold low --compact --exit
