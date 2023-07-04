@@ -30,4 +30,4 @@ jobs:
 
     - name: Run Sobelow
       id: run-sobelow
-      run: mix sobelow --threshold low --compact --exit
+      run: mix sobelow --exit
