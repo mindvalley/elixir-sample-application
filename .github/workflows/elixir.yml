@@ -28,6 +28,22 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
 
+    - name: Compile
+      run: mix compile
+
     - name: Run Sobelow
       id: run-sobelow
-      run: mix sobelow --exit
+      run: mix sobelow --exit --quite
+    
+    - name: Post Sobelow findings as a comment
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const body = 'Sobelow findings:\n\n' + `${{ steps.run-sobelow.outputs.stdout }}`;
+          const { data } = await github.pulls.createReview({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number,
+            body: body,
+          });
