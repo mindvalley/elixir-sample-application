@@ -33,7 +33,7 @@ jobs:
 
     - name: Run Sobelow and capture JSON file
       id: run-sobelow
-      run: mix sobelow  --format json > sobelow.json
+      run: mix sobelow --format json > sobelow.json
     - name: Post Sobelow Findings comment
       uses: actions/github-script@v2.1.0
       with:
