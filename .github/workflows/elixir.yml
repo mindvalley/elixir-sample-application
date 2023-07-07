@@ -38,7 +38,7 @@ jobs:
           echo "::set-output name=sobelow_json::$(cat sobelow.json)"
     - name: Check Sobelow findings and post comment
       if: steps.run-sobelow.outputs.sobelow_json != '{}'
-      uses: actions/github-script@v4
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
