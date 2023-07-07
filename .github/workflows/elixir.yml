@@ -58,18 +58,18 @@ jobs:
     
                 // Set severity icon based on confidence level
                 switch (confidence) {
-                  case 'high_confidence':
-                    severityIcon = ':red_circle:';
-                    break;
-                  case 'medium_confidence':
-                    severityIcon = ':orange_circle:';
-                    break;
-                  case 'low_confidence':
-                    severityIcon = ':yellow_circle:';
-                    break;
-                  default:
-                    severityIcon = '';
-                }
+                    case 'high_confidence':
+                      severityIcon = ':skull_and_crossbones:';
+                      break;
+                    case 'medium_confidence':
+                      severityIcon = ':warning:';
+                      break;
+                    case 'low_confidence':
+                      severityIcon = ':sun_with_face:';
+                      break;
+                    default:
+                      severityIcon = '';
+                  }
     
                 // Add severity level heading with icon
                 commentBody += `${severityIcon} ${confidence.charAt(0).toUpperCase() + confidence.slice(1)} Severity Findings:\n\n`;
