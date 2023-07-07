@@ -59,13 +59,13 @@ jobs:
                 // Set severity icon based on confidence level
                 switch (confidence) {
                   case 'high_confidence':
-                    severityIcon = ':red_circle:';
+                    severityIcon = ':red_circle';
                     break;
                   case 'medium_confidence':
-                    severityIcon = ':orange_circle:';
+                    severityIcon = ':orange_circle';
                     break;
                   case 'low_confidence':
-                    severityIcon = ':yellow_circle:';
+                    severityIcon = ':yellow_circle';
                     break;
                   default:
                     severityIcon = '';
