@@ -5,7 +5,7 @@ config :real_world, RealWorldWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "https://real-world-example.herokuapp.com/", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  secret_key_base: 'YoWQhgL1hh#%FwNFC03%Ud1yG0y^mnFVJUgDg9DBX2FYdeJ02nhDO#AFGUeeTBLA'
+  secret_key_base: "YoWQhgL1hh#%FwNFC03%Ud1yG0y^mnFVJUgDg9DBX2FYdeJ02nhDO#AFGUeeTBLA"
 
 config :logger, level: :info
 
