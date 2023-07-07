@@ -34,43 +34,17 @@ jobs:
     - name: Run Sobelow and capture JSON file
       id: run-sobelow
       run: |
-          mix sobelow --quiet --format json > sobelow.json
-          echo "::set-output name=sobelow_json::$(cat sobelow.json)"
-    - name: Check Sobelow findings and post comment
-      if: steps.run-sobelow.outputs.sobelow_json != '{}'
-      uses: actions/github-script@v6
+          mix sobelow --quiet --format json
+    - name: Post Good Job comment
+      uses: actions/github-script@v2.1.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const sobelowJson = ${{ steps.run-sobelow.outputs.sobelow_json }};
-          const totalFindings = sobelowJson.total_findings;
-          const findings = sobelowJson.findings;  
-          let body = 'Sobelow findings:\n\n';
-          if (totalFindings > 0) {
-            body += `Total Findings: ${totalFindings}\n\n`;
-            body += 'High Confidence:\n';
-            body += formatFindings(findings.high_confidence);
-            body += '\n\n';
-            body += 'Medium Confidence:\n';
-            body += formatFindings(findings.medium_confidence);
-            body += '\n\n';
-            body += 'Low Confidence:\n';
-            body += formatFindings(findings.low_confidence);
-          } else {
-            body += 'No Sobelow findings';
-          } 
+          const body = 'Good Job! :tada:';
+          
           const { data } = await github.pulls.createReview({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.payload.pull_request.number,
-            body: body,
-          }); 
-          function formatFindings(findingsArray) {
-            let formatted = '';
-            for (const finding of findingsArray) {
-              formatted += `File: ${finding.file}\n`;
-              formatted += `Line: ${finding.line}\n`;
-              formatted += `Key: ${finding.key}\n\n`;
-            }
-            return formatted;
-          }
+            body: body
+          });
