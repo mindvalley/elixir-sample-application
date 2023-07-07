@@ -40,11 +40,11 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const body = 'Good Job! :tada:';
+          const body = 'Good Job! :tada;';
           
-          const { data } = await github.pulls.createReview({
+          await github.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            pull_number: context.payload.pull_request.number,
+            issue_number: context.payload.pull_request.number,
             body: body
           });
