@@ -33,10 +33,19 @@ jobs:
 
     - name: Run Sobelow
       id: run-sobelow
-      run: mix sobelow --exit --quite
-    
-    - name: Post Sobelow findings as a comment
+      run: |
+        set +e
+        mix sobelow --quiet
+        EXIT_CODE=$?
+        set -e
+        if [ $EXIT_CODE -eq 0 ]; then
+          echo "No Sobelow findings"
+        else
+          echo "::set-output name=exit_code::$EXIT_CODE"
+        fi
+    - name: Check Sobelow findings and post comment
       uses: actions/github-script@v4
+      if: steps.run-sobelow.outputs.exit_code != '0'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
