@@ -84,7 +84,7 @@ jobs:
     
             commentBody += `Total Findings: ${findings.total_findings}`;
           } else {
-            commentBody = 'No Sobelow findings were detected.';
+            commentBody = 'Your code has achieved Jedi-level security! Sobelow senses no vulnerabilities';
           }
     
           github.issues.createComment({
@@ -95,5 +95,5 @@ jobs:
           });
 
     - name: Exit Pipeline if Sobelow Findings
-      if: steps.post-sobelow-findings.outputs.commentBody != 'No Sobelow findings were detected.'
+      if: steps.post-sobelow-findings.outputs.commentBody != 'Your code has achieved Jedi-level security! Sobelow senses no vulnerabilities'
       run: exit 1
