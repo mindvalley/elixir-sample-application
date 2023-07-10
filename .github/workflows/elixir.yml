@@ -50,7 +50,8 @@ jobs:
           let commentBody = '';
     
           if (findings.total_findings > 0) {
-            commentBody += 'Sobelow Findings:\n\n';
+            commentBody += '<details>\n';
+            commentBody += '<summary>Sobelow Findings</summary>\n\n';
     
             Object.entries(findings.findings).forEach(([confidence, items]) => {
               if (items.length > 0) {
@@ -83,8 +84,9 @@ jobs:
             });
     
             commentBody += `Total Findings: ${findings.total_findings}`;
+            commentBody += '</details>';
           } else {
-            commentBody = 'Your code has achieved Jedi-level security! Sobelow senses no vulnerabilities';
+            commentBody = 'Your code has achieved Jedi-level Security! Sobelow senses no Vulnerabilities';
           }
     
           github.issues.createComment({
@@ -95,5 +97,5 @@ jobs:
           });
 
     - name: Exit Pipeline if Sobelow Findings
-      if: steps.post-sobelow-findings.outputs.commentBody != 'Your code has achieved Jedi-level security! Sobelow senses no vulnerabilities'
+      if: steps.post-sobelow-findings.outputs.commentBody != 'Your code has achieved Jedi-level Security! Sobelow senses no Vulnerabilities'
       run: exit 1
