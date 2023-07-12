@@ -39,7 +39,7 @@ jobs:
     - name: Check Sobelow Findings
       id: check-sobelow
       run: |
-        total_findings=$(echo '${{ steps.run-sobelow.outputs.result }}' | jq -r '.total_findings')
+        total_findings=$(echo '${{ steps.run-sobelow.outputs }}' | jq -r '.total_findings')
         if [[ $total_findings -gt 0 ]]; then
           echo "Sobelow found $total_findings issues"
           exit 1
