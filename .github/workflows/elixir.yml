@@ -34,68 +34,13 @@ jobs:
     - name: Run Sobelow and capture JSON file
       id: run-sobelow
       run: |
-          mix sobelow --format json > sobelow.json
+          mix sobelow --format json 
 
-    - name: Post Sobelow Findings comment
-      id: post-sobelow-findings
-      uses: actions/github-script@v2.1.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const fs = require('fs');
-    
-          const sobelowJson = fs.readFileSync('sobelow.json', 'utf8');
-          const findings = JSON.parse(sobelowJson);
-    
-          let commentBody = '';
-    
-          if (findings.total_findings > 0) {
-            commentBody += '<details>\n';
-            commentBody += '<summary>Sobelow Findings</summary>\n\n';
-    
-            Object.entries(findings.findings).forEach(([confidence, items]) => {
-              if (items.length > 0) {
-                let severityIcon = '';
-    
-                // Set severity icon based on confidence level
-                switch (confidence) {
-                    case 'high_confidence':
-                      severityIcon = ':skull_and_crossbones:';
-                      break;
-                    case 'medium_confidence':
-                      severityIcon = ':warning:';
-                      break;
-                    case 'low_confidence':
-                      severityIcon = ':sun_with_face:';
-                      break;
-                    default:
-                      severityIcon = '';
-                  }
-    
-                // Add severity level heading with icon
-                commentBody += `${severityIcon} ${confidence.charAt(0).toUpperCase() + confidence.slice(1)} Severity Findings:\n\n`;
-    
-                items.forEach((finding) => {
-                  commentBody += `- ${finding.type} found in ${finding.file} (line ${finding.line})\n`;
-                });
-    
-                commentBody += '\n';
-              }
-            });
-    
-            commentBody += `Total Findings: ${findings.total_findings}`;
-            commentBody += '</details>';
-          } else {
-            commentBody = 'Your code has achieved Jedi-level Security! Sobelow senses no Vulnerabilities';
-          }
-    
-          github.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.payload.pull_request.number,
-            body: commentBody
-          });
-
-    - name: Exit Pipeline if Sobelow Findings
-      if: steps.post-sobelow-findings.outputs.commentBody != 'Your code has achieved Jedi-level Security! Sobelow senses no Vulnerabilities'
-      run: exit 1
+    - name: Check Sobelow Findings
+      id: check-sobelow
+      run: |
+        total_findings=$(echo '${{ steps.run-sobelow.outputs.result }}' | jq -r '.total_findings')
+        if [[ $total_findings -gt 0 ]]; then
+          echo "Sobelow found $total_findings issues"
+          exit 1
+        fi
